@@ -6,7 +6,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-  <title>创建账单</title>
+  <title>Create a bill</title>
   <style>
     body {
       font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -132,60 +132,60 @@
 
 <body class="amis-scope">
 <div class="page-error text-center inner-page">
-  <p>创建账单</p>
+  <p>Create a bill</p>
   <form action="/admin/view/confirmBillPage" method="post">
     <table align="center">
       <tr>
-        <th>车辆型号：</th>
+        <th>Car model：</th>
         <td th:text="${order.carModelName}"></td>
       </tr>
       <tr>
-        <th>用户姓名：</th>
+        <th>User name：</th>
         <td th:text="${order.username}"></td>
       </tr>
       <tr>
-        <th>手机号：</th>
+        <th>Phone number：</th>
         <td th:text="${order.phoneNumber}"></td>
       </tr>
       <tr>
-        <th>身份证号：</th>
+        <th>Id number：</th>
         <td th:text="${order.idNumber}"></td>
       </tr>
       <tr>
-        <th>取车日期：</th>
+        <th>Pick up date：</th>
         <td th:text="${order.startDate}"></td>
       </tr>
       <tr>
-        <th>计划还车日期：</th>
+        <th>Planned return date：</th>
         <td th:text="${order.endDate}"></td>
       </tr>
       <tr>
-        <th>实际还车日期：</th>
+        <th>Actual return date：</th>
         <td th:text="${bill.actualReturnDate}"></td>
       </tr>
       <tr>
-        <th>租期：</th>
-        <td th:text="@{${order.lease} + '天'}"></td>
+        <th>Order lease period：</th>
+        <td th:text="@{${order.lease} + ' days'}"></td>
       </tr>
       <tr>
-        <th>押金：</th>
+        <th>Deposit：</th>
         <td th:text="${order.deposit}"></td>
       </tr>
       <tr>
-        <th>租车费用：</th>
+        <th>Car rental cost：</th>
         <td th:text="${bill.rentCost}"></td>
       </tr>
       <tr>
-        <th>车损费用：</th>
+        <th>Car damage cost：</th>
         <td><input type="number" name="carDamageCost" value="0"></td>
       </tr>
       <tr>
-        <th>罚单费用：</th>
+        <th>Fines：</th>
         <td><input type="number" name="fines" value="0"></td>
       </tr>
     </table>
     <input hidden type="text" name="orderId" th:value="${order.id}">
-    <button type="submit">下一步</button>
+    <button type="submit">Next step</button>
   </form>
 </div>
 </body>

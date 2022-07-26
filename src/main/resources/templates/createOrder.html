@@ -6,7 +6,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-  <title>创建订单</title>
+  <title>Create order</title>
   <style>
     body {
       font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -132,36 +132,36 @@
 
 <body class="amis-scope">
 <div class="page-error text-center inner-page">
-  <p>创建订单</p>
+  <p>Create order</p>
   <form action="/view/confirmOrderPage" method="post">
     <table align="center">
       <tr>
-        <th>车辆型号：</th>
+        <th>Car model：</th>
         <td th:text="${carModel.name}"></td>
       </tr>
       <tr>
-        <th>用户姓名：</th>
+        <th>User name：</th>
         <td><input type="text" name="username"></td>
       </tr>
       <tr>
-        <th>手机号：</th>
+        <th>Phone number：</th>
         <td><input type="text" name="phoneNumber"></td>
       </tr>
       <tr>
-        <th>身份证号：</th>
+        <th>Id number：</th>
         <td><input type="text" name="idNumber"></td>
       </tr>
       <tr>
-        <th>取车日期：</th>
+        <th>Pick up date：</th>
         <td><input type="date" name="startDate" th:value="${startDate}"></td>
       </tr>
       <tr>
-        <th>还车日期：</th>
+        <th>Return date：</th>
         <td><input type="date" name="endDate" th:value="${endDate}"></td>
       </tr>
     </table>
     <input hidden type="text" name="carModelId" th:value="${carModel.id}">
-    <button type="submit">提交</button>
+    <button type="submit">Submit</button>
   </form>
 </div>
 </body>

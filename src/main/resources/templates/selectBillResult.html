@@ -6,7 +6,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-  <title>查询订单</title>
+  <title>Query bill list</title>
   <style>
     body {
       font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -132,25 +132,25 @@
 
 <body class="amis-scope">
 <div class="page-error text-center inner-page">
-  <p>待处理账单列表</p>
+  <p>List of pending bills</p>
   <table align="center">
     <tr>
-      <th>车辆型号</th>
-      <th>实际还车日期</th>
-      <th>超期天数</th>
-      <th>租车费用</th>
-      <th>车损费用</th>
-      <th>罚单费用</th>
-      <th>总费用</th>
-      <th>补交金额</th>
-      <th>退款金额</th>
-      <th>操作</th>
+      <th>Car model</th>
+      <th>Actual return date</th>
+      <th>Overdue days</th>
+      <th>Car rental cost</th>
+      <th>Car damage cost</th>
+      <th>Fines</th>
+      <th>Total cost</th>
+      <th>Supplementary payment amount</th>
+      <th>Refund amount</th>
+      <th>Operation</th>
     </tr>
     <th:block th:each="bill : ${bills}">
       <tr>
         <td th:text="${bill.carModelName}"></td>
         <td th:text="${bill.actualReturnDate}"></td>
-        <td th:text="@{${bill.fines} + '天'}"></td>
+        <td th:text="@{${bill.fines} + ' days'}"></td>
         <td th:text="${bill.rentCost}"></td>
         <td th:text="${bill.carDamageCost}"></td>
         <td th:text="${bill.fines}"></td>
@@ -158,7 +158,7 @@
         <td th:text="${bill.addAmount}"></td>
         <td th:text="${bill.returnAmount}"></td>
         <td>
-          <a th:if="${bill.isPaid} == 'false'" th:href="@{'/view/payBillPage?billId=' + ${bill.id}}">支付账单或申请退款</a>
+          <a th:if="${bill.isPaid} == 'false'" th:href="@{'/view/payBillPage?billId=' + ${bill.id}}">Pay bills or apply for refunds</a>
         </td>
       </tr>
     </th:block>

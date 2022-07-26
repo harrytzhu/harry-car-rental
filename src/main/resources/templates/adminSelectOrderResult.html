@@ -6,7 +6,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-  <title>查询订单</title>
+  <title>Query order</title>
   <style>
     body {
       font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -132,18 +132,18 @@
 
 <body class="amis-scope">
 <div class="page-error text-center inner-page">
-  <p>订单列表</p>
+  <p>Order list</p>
   <table align="center">
     <tr>
-      <th>车辆型号</th>
-      <th>用户姓名</th>
-      <th>手机号</th>
-      <th>身份证号</th>
-      <th>取车日期</th>
-      <th>还车日期</th>
-      <th>租期</th>
-      <th>押金</th>
-      <th>操作</th>
+      <th>Car model</th>
+      <th>User name</th>
+      <th>Phone number</th>
+      <th>Id number</th>
+      <th>Pick up date</th>
+      <th>Return date</th>
+      <th>Order lease period</th>
+      <th>Deposit</th>
+      <th>Operation</th>
     </tr>
     <th:block th:each="order : ${orders}">
       <tr>
@@ -153,11 +153,11 @@
         <td th:text="${order.idNumber}"></td>
         <td th:text="${order.startDate}"></td>
         <td th:text="${order.endDate}"></td>
-        <td th:text="@{${order.lease} + '天'}"></td>
+        <td th:text="@{${order.lease} + ' days'}"></td>
         <td th:text="${order.deposit}"></td>
         <td>
-          <a th:if="${order.status} == 'PAID'" th:href="@{'/admin/view/deliverCarPage?orderId=' + ${order.id}}">用户取车</a>
-          <a th:if="${order.status} == 'CAR_DELIVERED'" th:href="@{'/admin/view/createBillPage?orderId=' + ${order.id}}">用户还车</a>
+          <a th:if="${order.status} == 'PAID'" th:href="@{'/admin/view/deliverCarPage?orderId=' + ${order.id}}">User pick-up</a>
+          <a th:if="${order.status} == 'CAR_DELIVERED'" th:href="@{'/admin/view/createBillPage?orderId=' + ${order.id}}">User returns the car</a>
         </td>
       </tr>
     </th:block>

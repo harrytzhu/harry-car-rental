@@ -6,7 +6,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-  <title>选择车型</title>
+  <title>Select car</title>
   <style>
     body {
       font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -132,14 +132,14 @@
 
 <body class="amis-scope">
 <div class="page-error text-center inner-page">
-  <p>请选择车型</p>
+  <p>Please select the car model</p>
   <table align="center">
     <tr>
-      <th>品牌</th>
-      <th>型号</th>
-      <th>详细描述</th>
-      <th>剩余数量</th>
-      <th>操作</th>
+      <th>Brand</th>
+      <th>Car model</th>
+      <th>Description</th>
+      <th>Remaining quantity</th>
+      <th>Operation</th>
     </tr>
     <th:block th:each="item : ${carModels}">
       <tr th:if="${item.carCount} > 0">
@@ -147,7 +147,7 @@
         <td th:text="${item.name}"></td>
         <td th:text="${item.description}"></td>
         <td th:text="${item.carCount}"></td>
-        <td><a th:href="@{'/view/createOrderPage?carModelId=' + ${item.id} +'&startDate=' + ${startDate} + '&endDate=' + ${endDate}}">预定</a></td>
+        <td><a th:href="@{'/view/createOrderPage?carModelId=' + ${item.id} +'&startDate=' + ${startDate} + '&endDate=' + ${endDate}}">Booking</a></td>
       </tr>
       <p class="detail" th:text="${errorMessage}"></p>
     </th:block>
