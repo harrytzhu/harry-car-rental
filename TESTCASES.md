@@ -1,67 +1,57 @@
-### 1. 正常流程用例
-#### 租车
-1. 访问租车平台首页https://harry-car-rental.azurewebsites.net
-2. 点击租车
-3. 选择日期
-4. 选择车型
-5. 输入用户信息后提交并确认订单
-6. 通过首页查询订单列表
-7. 输入身份证号查询
-8. 支付押金
-9. 线下取车，管理员在首页点击用户取车或还车
-10. 输入身份证号查询订单
-11. 找到之前的订单，点击用户取车，到此取车流程结束
-
-#### 还车
-1. 用户到线下门店还车，管理员访问租车平台首页，点击用户取车或还车
-2. 管理员输入身份证号查询订单
-3. 管理员找到要还车的订单，点击用户还车
-4. 管理员在创建账单页面输入车损费用和罚单费用，点击下一步
-5. 管理员确认账单无误后点击确认
-6. 用户通过首页点击查询账单列表
-7. 输入身份证号查询
-8. 找到之前的账单，点击支付账单或申请退款，完成后到此还车成功
-
-### 2. 错误输入类异常用例
-#### 租车时选择错误的日期
-1. 开始日期晚于还车日期，点下一步后提示报错
-2. 开始时间或还车时间为空，点下一步后提示报错
-3. 开始时间或结束时间选择当前之前的日期，点下一步后提示报错
-4. 开始时间或结束时间选365天之后的日期，点下一步后提示报错
-
-#### 租车创建订单时输入错误的用户姓名、手机号、身份证号
-1. 用户姓名、手机号、身份证号其中一个为空，提交订单后提示报错
-2. 输入错误的用户姓名，提交订单后提示报错
-3. 输入错误的手机号，提交订单后提示报错
-4. 输入错误的身份证号，提交订单后提示报错
-
-#### 用户查询订单列表时输入错误的身份证号
-1. 身份证号为空，点击查询后提示报错
-2. 输入错误的身份证号，点击查询后提示报错
-
-#### 用户查询账单列表时输入错误的身份证号
-1. 身份证号为空，点击查询后提示报错
-2. 输入错误的身份证号，点击查询后提示报错
-
-#### 管理员查询订单列表时输入错误的身份证号
-1. 身份证号为空，点击查询后提示报错
-2. 输入错误的身份证号，点击查询后提示报错
-
-### 3. 观察结果类用例
-#### 可供选择的车辆型号列表结果
-1. 预定了包含2022-07-26的Toyota Camry两次后，再次查询2022-07-26的可预订列表，不再有Toyota Camry
-2. 选择包含2022-07-26的日期范围，都无法查到Toyota Camry
-3. 选择不包含2022-07-26的日期范围，可以正常查询到Toyota Camry
-
-#### 用户查询订单列表结果
-1. 创建后没有支付的订单，在订单列表的操作列下边有支付押金链接
-2. 已经支付过押金的订单，在订单列表中没有支付押金链接
-
-#### 用户查询账单列表结果
-1. 创建后没有补交或退款的账单，在账单列表的操作列下边有支付账单或申请退款链接
-2. 已经补交或退款的账单，在账单列表中没有支付账单或申请退款链接
-
-#### 管理员查询用户订单列表结果
-1. 用户已交押金的订单，在此列表中操作列下边有用户取车链接
-2. 用户已取车的订单，在此列表中操作列下边有用户还车链接
-3. 用户已还车，已在账单里操作补交或退款的订单，在此列表中没有用户还车链接
+###1. Normal process use cases
+####Car rental
+1. Visit the homepage of car rental platform https://harry-car-rental.azurewebsites.net
+2. Click to rent a car
+3. Select date
+4. Select vehicle type
+5. Submit and confirm the order after entering the user information
+6. Query the order list through the home page
+7. Enter the ID number to query
+8. Payment of deposit
+9. Offline car pick-up, the administrator clicks the user to pick up or return the car on the home page
+10. Enter the ID number to query the order
+11. Find the previous order, click the user to pick up the car, and this is the end of the car picking up process
+####Return the car
+1. When the user returns the car at the offline store, the administrator accesses the homepage of the car rental platform and clicks the user to pick up or return the car
+2. The administrator enters the ID number to query the order
+3. The administrator finds the order to return the car and clicks the user to return the car
+4. The administrator inputs the vehicle damage fee and ticket fee on the create bill page, and then click next
+5. Click OK after the administrator confirms that the bill is correct
+6. Users can click on the home page to query the bill list
+7. Enter the ID number to query
+8. Find the previous bill, click to pay the bill or apply for a refund, and then return the car here successfully
+###2. Error input exception case
+####Choose the wrong date when renting a car
+1. The start date is later than the return date, and an error will be prompted after clicking next
+2. If the start time or return time is empty, an error will be prompted after clicking next
+3. Select the date before the current start time or end time, and click next to prompt an error
+4. Select the date after 365 days for the start time or end time. Click Next and you will be prompted with an error
+####Wrong user name, mobile phone number and ID number are entered when creating an order for car rental
+1. If one of the user's name, mobile phone number and ID number is empty, an error will be prompted after submitting the order
+2. Enter the wrong user name and prompt for error after submitting the order
+3. Enter the wrong mobile phone number and prompt for error after submitting the order
+4. Enter the wrong ID number, and prompt for error after submitting the order
+####The user entered the wrong ID number when querying the order list
+1. If the ID number is empty, you will be prompted to report an error after clicking query
+2. Enter the wrong ID number, and click query to prompt an error
+####The user entered the wrong ID number when querying the bill list
+1. If the ID number is empty, you will be prompted to report an error after clicking query
+2. Enter the wrong ID number, and click query to prompt an error
+####The administrator entered the wrong ID number when querying the order list
+1. If the ID number is empty, you will be prompted to report an error after clicking query
+2. Enter the wrong ID number, and click query to prompt an error
+###3. Observation result use cases
+####List results of vehicle models available for selection
+1. After booking the Toyota Camry containing 2022-07-26 twice, query the list of reservations available on 2022-07-26 again, and there is no Toyota Camry anymore
+2. If you select a date range that includes 2022-07-26, you cannot find Toyota Camry
+3. If you select a date range that does not include 2022-07-26, you can normally query Toyota Camry
+####User query order list results
+1. For orders that have not been paid after creation, there is a link to pay deposit under the operation column of the order list
+2. For orders that have already paid the deposit, there is no link to pay the deposit in the order list
+####User query bill list results
+1. For bills that have not been supplemented or refunded after creation, there is a link to pay bills or apply for refunds under the operation column of the bill list
+2. For bills that have been supplemented or refunded, there is no link to pay bills or apply for refunds in the bill list
+####Administrator queries user order list results
+1. For orders for which the user has paid a deposit, there is a link for the user to pick up the car under the operation column in this list
+2. For orders that the user has picked up, there is a user return link under the operation column in this list
+3. The user has returned the car, and there is no user return link in this list for orders that have been supplemented or refunded in the bill

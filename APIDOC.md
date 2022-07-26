@@ -1,36 +1,33 @@
-## API列表
-### 通用
-所有API返回体结构都是这样，Http Status Code都是200，响应体中的status等于0表示成功，非0表示失败，errMsg输出失败原因，成功时data字段为响应体数据
- ```
- {
+##API list
+###General
+The structure of all API return bodies is like this. The HTTP status code is 200. If the status in the response body is equal to 0, it means success, and if it is not 0, it means failure. Errmsg outputs the failure reason. The data field is the response body data when it succeeds
+```
+{
     "status":0,
     "errMsg":null,
     "data":{
-        
     }
- }
- ```
-### 用户管理
-
-|  字段名   | 描述  |
+}
+```
+###User management
+|Field name | description|
 |  ----  | ----  |
-| id  | 用户ID |
-| name  | 姓名 |
-| idNumber | 身份证号 |
-| phoneNumber | 手机号 |
-
-1. 创建用户 POST /users
+|ID | user ID|
+|Name | name|
+|IDnumber | ID number|
+|Phonenumber | mobile number|
+1. Create user post /users
 - Request Body:
- ```
- {
-    "name":"Li Lei", //必选
-    "idNumber":"440305202207240001", //必选
-    "phoneNumber:"13888888888" //必选
- }
- ```
+```
+{
+    "Name": "Li Lei", // required
+    "IDnumber": "440305202207240001", // required
+    "Phonenumber:" 138888888 "// required
+}
+```
 - Response Body:
- ```
- {
+```
+{
     "status":0,
     "errMsg":null,
     "data":{
@@ -39,12 +36,12 @@
         "idNumber":"440305202207240001",
         "phoneNumber:"13888888888"
     }
- }
- ```
-2. 查询用户 GET /users/{userId}
+}
+```
+2. Query user get /users/{userid}
 - Response Body:
- ```
- {
+```
+{
     "status":0,
     "errMsg":null,
     "data":{
@@ -53,20 +50,20 @@
         "idNumber":"440305202207240001",
         "phoneNumber:"13888888888"
     }
- }
- ```
-3. 修改用户 PUT /users/{userId}
+}
+```
+3. Modify user put /users/{userid}
 - Request Body:
- ```
- {
-    "name":"Li Lei Lei", //非必选
-    "idNumber":"440305202207240001", //非必选
-    "phoneNumber:"13888888888" //非必选
- }
- ```
+```
+{
+    "Name": "Li Lei Lei", // not required
+    "IDnumber": "440305202207240001", // not required
+    "Phonenumber:" 138888888 "// not required
+}
+```
 - Response Body:
- ```
- {
+```
+{
     "status":0,
     "errMsg":null,
     "data":{
@@ -75,279 +72,273 @@
         "idNumber":"440305202207240001",
         "phoneNumber:"13888888888"
     }
- }
- ```
-2. 删除用户 DELETE /users/{userId}
+}
+```
+2. Delete user delete /users/{userid}
 - Response Body:
- ```
- {
+```
+{
     "status":0,
     "errMsg":null,
     "data":null
- }
- ```
-
-### 订单管理
-
-|  字段名   | 描述  |
+}
+```
+###Order management
+|Field name | description|
 |  ----  | ----  |
-| id  | 订单ID |
-| userId  | 用户ID |
-| carId | 车辆ID |
-| carModelId | 车辆型号ID |
-| startDate | 开始日期 |
-| endDate | 结束日期 |
-| deposit | 押金 |
-| status | 状态 |
-
-1. 创建订单 POST /orders
+|ID | order ID|
+|Userid | user ID|
+|Carid | vehicle ID|
+|Carmodelid | vehicle model ID|
+|StartDate | start date|
+|Enddate | end date|
+|Deposit | deposit|
+|Status | status|
+1. Create order post /orders
 - Request Body:
- ```
- {
-    "userId":1, //必选
-    "carId":1, //必选
-    "carModelId:1, //必选
-    "startDate:"2022-07-26", //必选
-    "endDate:"2022-07-26", //必选
-    "deposit:1000 //必选
- }
- ```
+```
+{
+    "Userid": 1, // required
+    "Carid": 1, // required
+    "Carmodelid:1, // required
+    "Startdate:" 2022-07-26 ", // required
+    "Enddate:" 2022-07-26 ", // required
+    "Deposit:1000 // required
+}
+```
 - Response Body:
- ```
- {
+```
+{
     "status":0,
     "errMsg":null,
     "data":{
-       "id":1,
-       "userId":1,
-       "carId":1,
-       "carModelId:1,
-       "startDate:"2022-07-26",
-       "endDate:"2022-07-26",
-       "deposit:1000
+        "id":1,
+        "userId":1,
+        "carId":1,
+        "carModelId:1,
+        "startDate:"2022-07-26",
+        "endDate:"2022-07-26",
+        "deposit:1000
     }
- }
- ```
-2. 查询订单 GET /orders/{orderId}
+}
+```
+2. Query order get /orders/{orderid}
 - Response Body:
- ```
- {
+```
+{
     "status":0,
     "errMsg":null,
     "data":{
-       "id":1,
-       "userId":1,
-       "carId":1,
-       "carModelId:1,
-       "startDate:"2022-07-26",
-       "endDate:"2022-07-26",
-       "deposit:1000
+        "id":1,
+        "userId":1,
+        "carId":1,
+        "carModelId:1,
+        "startDate:"2022-07-26",
+        "endDate:"2022-07-26",
+        "deposit:1000
     }
- }
- ```
-3. 修改订单 PUT /orders/{orderId}
+}
+```
+3. Modify order put /orders/{orderid}
 - Request Body:
- ```
- {
-    "userId":1, //非必选
-    "carId":1, //非必选
-    "carModelId:1, //非必选
-    "startDate:"2022-07-26", //非必选
-    "endDate:"2022-07-26", //非必选
-    "deposit:1000 //非必选
- }
- ```
+```
+{
+    "Userid": 1, // not required
+    "Carid": 1, // not required
+    "Carmodelid:1, // not required
+    "Startdate:" 2022-07-26 ", // not required
+    "Enddate:" 2022-07-26 ", // not required
+    "Deposit:1000 // not required
+}
+```
 - Response Body:
- ```
- {
+```
+{
     "status":0,
     "errMsg":null,
     "data":{
-       "id":1,
-       "userId":1,
-       "carId":1,
-       "carModelId:1,
-       "startDate:"2022-07-26",
-       "endDate:"2022-07-26",
-       "deposit:1000
+        "id":1,
+        "userId":1,
+        "carId":1,
+        "carModelId:1,
+        "startDate:"2022-07-26",
+        "endDate:"2022-07-26",
+        "deposit:1000
     }
- }
- ```
-4. 删除订单 DELETE /orders/{orderId}
+}
+```
+4. Delete order /orders/{orderid}
 - Response Body:
- ```
- {
+```
+{
     "status":0,
     "errMsg":null,
     "data":null
- }
- ```
-5. 根据用户身份证号查询订单 GET /orders/idNumbers/{idNumber}
+}
+```
+5. Query the order according to the user's ID number get /orders/idnumbers/{idnumber}
 - Response Body:
- ```
- {
+```
+{
     "status":0,
     "errMsg":null,
     "data":[
         {
-           "id":1,
-           "userId":1,
-           "carId":1,
-           "carModelId:1,
-           "startDate:"2022-07-26",
-           "endDate:"2022-07-26",
-           "deposit:1000
+            "id":1,
+            "userId":1,
+            "carId":1,
+            "carModelId:1,
+            "startDate:"2022-07-26",
+            "endDate:"2022-07-26",
+            "deposit:1000
         }
     ]
- }
- ```
-6. 订单非CRUD的其他 POST /orders/actions
-- Request Body:
- ```
- {
-    "actionId":"CREATE_ORDER_CHECK", //必选
-    "data":{
-        //非必选
-    }
- }
- ```
-- Response Body:
- ```
- {
-    "status":0,
-    "errMsg":null,
-    "data":null
- }
- ```
-
-### 账单管理
-
-|  字段名   | 描述  |
-|  ----  | ----  |
-| id  | 账单ID |
-| userId  | 用户ID |
-| orderId | 订单ID |
-| carModelId | 车辆型号ID |
-| actualReturnDate | 实际还车日期 |
-| expireDays | 超期天数 |
-| rentCost | 租车费用 |
-| carDamageCost | 车损费用 |
-| fines | 罚单金额 |
-| totalCost | 总费用 |
-| isPaid | 是否已支付 true:已支付  false:未支付 |
-| addAmount | 补交金额 |
-| returnAmount | 退款金额 |
-
-1. 创建账单 POST /bills
-- Request Body:
- ```
- {
-    "userId":1, //必选
-    "orderId":1, //必选
-    "carModelId:1, //必选
-    "actualReturnDate:"2022-07-26", //必选
-    "expireDays:1, //必选
-    "rentCost":300, //必选
-    "carDamageCost":100, //必选
-    "fines":200, //必选
-    "totalCost":1050, //必选
-    "addAmount":0, //必选
-    "returnAmount":2250, //必选
- }
- ```
-- Response Body:
- ```
- {
-    "status":0,
-    "errMsg":null,
-    "data":{
-        "id":1,
-        "userId":1,
-        "orderId":1,
-        "carModelId:1,
-        "actualReturnDate:"2022-07-26",
-        "expireDays:1,
-        "rentCost":300,
-        "carDamageCost":100,
-        "fines":200,
-        "totalCost":1050,
-        "addAmount":0,
-        "returnAmount":2250,
-    }
- }
- ```
-2. 查询账单 GET /bills/{billId}
-- Response Body:
- ```
- {
-    "status":0,
-    "errMsg":null,
-    "data":{
-        "id":1,
-        "userId":1,
-        "orderId":1,
-        "carModelId:1,
-        "actualReturnDate:"2022-07-26",
-        "expireDays:1,
-        "rentCost":300,
-        "carDamageCost":100,
-        "fines":200,
-        "totalCost":1050,
-        "addAmount":0,
-        "returnAmount":2250,
-    }
- }
- ```
-3. 修改账单 PUT /bills/{billId}
-- Request Body:
- ```
- {
-    "userId":1, //非必选
-    "orderId":1, //非必选
-    "carModelId:1, //非必选
-    "actualReturnDate:"2022-07-26", //非必选
-    "expireDays:1, //非必选
-    "rentCost":300, //非必选
-    "carDamageCost":100, //非必选
-    "fines":200, //非必选
-    "totalCost":1050, //非必选
-    "addAmount":0, //非必选
-    "returnAmount":2250, //非必选
- }
- ```
-- Response Body:
- ```
- {
-    "status":0,
-    "errMsg":null,
-    "data":{
-        "id":1,
-        "userId":1,
-        "orderId":1,
-        "carModelId:1,
-        "actualReturnDate:"2022-07-26",
-        "expireDays:1,
-        "rentCost":300,
-        "carDamageCost":100,
-        "fines":200,
-        "totalCost":1050,
-        "addAmount":0,
-        "returnAmount":2250,
-    }
- }
- ```
-4. 删除账单 DELETE /bills/{billId}
-- Response Body:
- ```
- {
-    "status":0,
-    "errMsg":null,
-    "data":null
- }
- ```
-5. 根据用户身份证号查询账单 GET /bills/idNumbers/{idNumber}
+}
 ```
- {
+6. Other post /orders/actions of orders other than CRUD
+- Request Body:
+```
+{
+    "ActionID": "create_order_check", // required
+    "data":{
+        // Optional
+    }
+}
+```
+- Response Body:
+```
+{
+    "status":0,
+    "errMsg":null,
+    "data":null
+}
+```
+###Bill management
+|Field name | description|
+|  ----  | ----  |
+|ID | bill ID|
+|Userid | user ID|
+|OrderID | order ID|
+|Carmodelid | vehicle model ID|
+|Actualreturndate | actual return date|
+|Expiredays | overdue days|
+|Rentcost | car rental fee|
+|Cardamagecost | vehicle damage cost|
+|Fines | ticket amount|
+|Totalcost | total cost|
+|Ispaid | whether paid true: paid false: not paid|
+|Addamount | supplementary payment amount|
+|Returnamount | refund amount|
+1. Create bill post /bills
+- Request Body:
+```
+{
+    "Userid": 1, // required
+    "OrderID": 1, // required
+    "Carmodelid:1, // required
+    "Actualreturndate:" 2022-07-26 ", // required
+    "Expiredays:1, // required
+    "Rentcast": 300, // required
+    "Cardamagecost": 100, // required
+    "Fines": 200, // required
+    "Totalcost": 1050, // required
+    "Addamount": 0, // required
+    "Returnamount": 2250, // required
+}
+```
+- Response Body:
+```
+{
+    "status":0,
+    "errMsg":null,
+    "data":{
+        "id":1,
+        "userId":1,
+        "orderId":1,
+        "carModelId:1,
+        "actualReturnDate:"2022-07-26",
+        "expireDays:1,
+        "rentCost":300,
+        "carDamageCost":100,
+        "fines":200,
+        "totalCost":1050,
+        "addAmount":0,
+        "returnAmount":2250,
+    }
+}
+```
+2. Query bill get /bills/{billid}
+- Response Body:
+```
+{
+    "status":0,
+    "errMsg":null,
+    "data":{
+        "id":1,
+        "userId":1,
+        "orderId":1,
+        "carModelId:1,
+        "actualReturnDate:"2022-07-26",
+        "expireDays:1,
+        "rentCost":300,
+        "carDamageCost":100,
+        "fines":200,
+        "totalCost":1050,
+        "addAmount":0,
+        "returnAmount":2250,
+    }
+}
+```
+3. Modify bill put /bills/{billid}
+- Request Body:
+```
+{
+    "Userid": 1, // not required
+    "OrderID": 1, // not required
+    "Carmodelid:1, // not required
+    "Actualreturndate:" 2022-07-26 ", // not required
+    "Expiredays:1, // not required
+    "Rentcast": 300, // not required
+    "Cardamagecost": 100, // not required
+    "Fines": 200, // not required
+    "Totalcost": 1050, // not required
+    "Addamount": 0, // not required
+    "Returnamount": 2250, // not required
+}
+```
+- Response Body:
+```
+{
+    "status":0,
+    "errMsg":null,
+    "data":{
+        "id":1,
+        "userId":1,
+        "orderId":1,
+        "carModelId:1,
+        "actualReturnDate:"2022-07-26",
+        "expireDays:1,
+        "rentCost":300,
+        "carDamageCost":100,
+        "fines":200,
+        "totalCost":1050,
+        "addAmount":0,
+        "returnAmount":2250,
+    }
+}
+```
+4. Delete bill /bills/{billid}
+- Response Body:
+```
+{
+    "status":0,
+    "errMsg":null,
+    "data":null
+}
+```
+5. Query the bill according to the user's ID number get /bills/idnumbers/{idnumber}
+```
+{
     "status":0,
     "errMsg":null,
     "data":[
@@ -366,30 +357,30 @@
             "returnAmount":2250,
         }
     ]
- }
- ```
-6. 账单非CRUD的其他 POST /bills/actions
+}
+```
+6. Other post /bills/actions of non crud bills
 - Request Body:
- ```
- {
-    "actionId":"PAY_BILL", //必选
+```
+{
+    "ActionID": "pay_bill", // required
     "data":{
-        //非必选
+        //Optional
     }
- }
- ```
+}
+```
 - Response Body:
- ```
- {
+```
+{
     "status":0,
     "errMsg":null,
     "data":null
- }
- ```
-7. 查询临时账单 GET /bills/temporaryBill/orders/{orderId}
+}
+```
+7. Query temporary bill get /bills/temporarybill/orders/{orderid}
 - Response Body:
- ```
- {
+```
+{
     "status":0,
     "errMsg":null,
     "data":{
@@ -405,12 +396,12 @@
         "addAmount":0,
         "returnAmount":0,
     }
- }
- ```
-8. 查询正式账单 GET /bills/formalBill/orders/{orderId}?carDamageCost=100&fines=200
+}
+```
+8. Query the official bill get /bills/formalbill/orders/{orderid}? carDamageCost=100&amp;fines=200
 - Response Body:
 ```
- {
+{
     "status":0,
     "errMsg":null,
     "data":[
@@ -429,5 +420,5 @@
             "returnAmount":2250,
         }
     ]
- }
- ```
+}
+```

@@ -1,30 +1,26 @@
-## 假设：
-1. 车辆不需要整备，还车后第二天就可以继续出租；
-2. 每天0到23:59:59都可以还车，都算作当天还车；
-
-## 租车规则：
-1. 提前还车，按预定时的结束时间收取费用；
-2. 过期还车，超过结束时间的天数按1.5倍日租金收取费用；
-3. 押金金额，等于在租期基础上加10天的总租金金额；
-4. 用户取车，还车，需由门店管理员操作；
-5. 还车时需要缴纳车损费用和交通罚单费用，并与押金对比，多退少补；
-6. 租车的时长单位是天，最少可租1天；
-7. 租车结束时间最长不能超过365天后；
-
-## 预置的车辆类型和数量
-|  型号   | 数量  |
+##Assumptions:
+1. The car does not need servicing, and it can be rented the next day after returning it;
+2. You can return the car from 0 to 23:59:59 every day, which is counted as the same day return;
+##Car rental rules:
+1. If the car is returned in advance, the fee will be charged according to the scheduled end time;
+2. If the car is returned after the expiration date, a fee of 1.5 times the daily rent will be charged for the days beyond the end time;
+3. The deposit amount is equal to the total rent amount of 10 days on the basis of the lease term;
+4. The store administrator is required to operate when the user picks up and returns the car;
+5. When returning the car, you need to pay the car damage fee and traffic ticket fee, and compare it with the deposit, refund the excess and make up the deficiency;
+6. The unit of car rental is days, and at least 1 day can be rented;
+7. The longest ending time of car rental cannot exceed 365 days;
+##Preset vehicle type and quantity
+|Model | quantity|
 |  ----  | ----  |
 | Toyota Camry  | 2 |
 | BMW 650  | 2 |
-
-## 预置的车型每日租金
-|  型号   | 租金  |
+##Daily rental of preset models
+|Model | rent|
 |  ----  | ----  |
 | Toyota Camry  | 300 |
 | BMW 650  | 500 |
-
-## 预置的用户
-|  姓名   | 手机号  | 身份证号  |
+##Preset users
+|Name | mobile number | ID number|
 |  ----  | ----  | ----  |
 | Li Lei  | 13888888888 | 440305202207240001 |
 | Han Mei Mei  | 13999999999 | 440305202207240002 |
