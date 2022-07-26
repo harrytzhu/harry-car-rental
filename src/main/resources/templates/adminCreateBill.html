@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <title>创建账单</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+      font-size: 14px;
+      line-height: 1.42857143;
+      color: #333;
+      background-color: #fff;
+    }
+
+    .page-error h1 {
+      margin-top: 0;
+    }
+
+    .page-error .title {
+      display: inline-block;
+      vertical-align: middle;
+      *vertical-align: auto;
+      *zoom: 1;
+      *display: inline;
+      text-align: center;
+    }
+
+    .page-error .number {
+      display: inline-block;
+      vertical-align: middle;
+      *vertical-align: auto;
+      *zoom: 1;
+      *display: inline;
+      float: left;
+      text-align: right;
+      font-size: 4em;
+      margin-right: 15px;
+      font-family: "latolight";
+    }
+
+    .page-error .text {
+      display: inline-block;
+      vertical-align: middle;
+      *vertical-align: auto;
+      *zoom: 1;
+      *display: inline;
+      float: left;
+      text-align: left;
+      font-size: 1.5em;
+      line-height: 1.2;
+      position: relative;
+      top: 12px;
+    }
+
+    .page-error .detail {
+      margin: 2em 0 4em 0;
+      /*自动换行*/
+      word-wrap: break-word;
+      word-break: break-all;
+      word-break: normal;
+    }
+
+    .inner-page {
+      padding-top: 8%;
+      /*padding-bottom:5%;*/
+      min-height: 650px;
+    }
+
+    @media screen and (max-width: 768px) {
+      .page-error .text {
+        margin-bottom: 40px;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .page-error .number,
+      .page-error .text {
+        display: block;
+        width: 100%;
+        float: none;
+        text-align: center;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .page-error .number,
+      .page-error .text {
+        font-size: 1.4em;
+      }
+    }
+
+    .page-error .searchbox {
+      margin-top: 50px;
+      margin-bottom: 50px;
+      width: 40%;
+    }
+
+    @media screen and (max-width: 480px) {
+      .page-error .searchbox {
+        width: 100%;
+      }
+
+      .page-error .searchbox input[type="search"],
+      .page-error .searchbox .input-group,
+      .page-error .searchbox .input-group-btn,
+      .page-error .searchbox .btn {
+        display: block;
+        width: 100%;
+        float: none;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .page-error .searchbox {
+        width: 80%;
+      }
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    img {
+      width: 10%;
+    }
+  </style>
+</head>
+
+<body class="amis-scope">
+<div class="page-error text-center inner-page">
+  <p>创建账单</p>
+  <form action="/admin/view/confirmBillPage" method="post">
+    <table align="center">
+      <tr>
+        <th>车辆型号：</th>
+        <td th:text="${order.carModelName}"></td>
+      </tr>
+      <tr>
+        <th>用户姓名：</th>
+        <td th:text="${order.username}"></td>
+      </tr>
+      <tr>
+        <th>手机号：</th>
+        <td th:text="${order.phoneNumber}"></td>
+      </tr>
+      <tr>
+        <th>身份证号：</th>
+        <td th:text="${order.idNumber}"></td>
+      </tr>
+      <tr>
+        <th>取车日期：</th>
+        <td th:text="${order.startDate}"></td>
+      </tr>
+      <tr>
+        <th>计划还车日期：</th>
+        <td th:text="${order.endDate}"></td>
+      </tr>
+      <tr>
+        <th>实际还车日期：</th>
+        <td th:text="${bill.actualReturnDate}"></td>
+      </tr>
+      <tr>
+        <th>租期：</th>
+        <td th:text="@{${order.lease} + '天'}"></td>
+      </tr>
+      <tr>
+        <th>押金：</th>
+        <td th:text="${order.deposit}"></td>
+      </tr>
+      <tr>
+        <th>租车费用：</th>
+        <td th:text="${bill.rentCost}"></td>
+      </tr>
+      <tr>
+        <th>车损费用：</th>
+        <td><input type="number" name="carDamageCost" value="0"></td>
+      </tr>
+      <tr>
+        <th>罚单费用：</th>
+        <td><input type="number" name="fines" value="0"></td>
+      </tr>
+    </table>
+    <input hidden type="text" name="orderId" th:value="${order.id}">
+    <button type="submit">下一步</button>
+  </form>
+</div>
+</body>
+
+</html>
