@@ -3,9 +3,11 @@ package com.harry.carrental.harrycarrental.controller.view;
 import com.harry.carrental.harrycarrental.constant.BillActionEunm;
 import com.harry.carrental.harrycarrental.constant.OrderActionEunm;
 import com.harry.carrental.harrycarrental.controller.api.BillController;
+import com.harry.carrental.harrycarrental.controller.api.OrderController;
 import com.harry.carrental.harrycarrental.exception.ExceptionConstant;
 import com.harry.carrental.harrycarrental.model.CommonRespModel;
 import com.harry.carrental.harrycarrental.vo.ActionRequestVO;
+import com.harry.carrental.harrycarrental.vo.BillVO;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,9 @@ public class BillViewController {
 
     @Resource
     private BillController billController;
+
+    @Resource
+    private OrderController orderController;
 
     @GetMapping("/view/selectBillInputPage")
     public String selectBillInputPage() {
@@ -38,12 +43,33 @@ public class BillViewController {
     }
 
     @GetMapping("/view/payBillPage")
-    public String payDepositPage(Model model, @RequestParam String billId) {
+    public String payBillPage(Model model, @RequestParam Integer billId) {
         ActionRequestVO actionRequestVO = new ActionRequestVO();
         actionRequestVO.setActionId(BillActionEunm.PAY_BILL.name());
         actionRequestVO.setData(Integer.valueOf(billId));
         CommonRespModel respModel = billController.billActions(actionRequestVO);
-        model.addAttribute("payResult", respModel.getData());
-        return "payResult";
+        if (ExceptionConstant.COMMON_ERROR_STATUS == respModel.getStatus()) {
+            model.addAttribute("errorMessage", respModel.getMsg());
+            return "commonError";
+        }
+        else {
+            CommonRespModel getBillRespModel = billController.getBillById(billId);
+            if (ExceptionConstant.COMMON_ERROR_STATUS == respModel.getStatus()) {
+                model.addAttribute("errorMessage", respModel.getMsg());
+                return "commonError";
+            }
+            BillVO billVO = (BillVO) getBillRespModel.getData();
+            ActionRequestVO returnCarActionRequestVO = new ActionRequestVO();
+            returnCarActionRequestVO.setActionId(OrderActionEunm.RETURN_CAR.name());
+            returnCarActionRequestVO.setData(Integer.valueOf(billVO.getOrderId()));
+            CommonRespModel returnCarRespModel = orderController.orderActions(returnCarActionRequestVO);
+            if (ExceptionConstant.COMMON_ERROR_STATUS == returnCarRespModel.getStatus()) {
+                model.addAttribute("errorMessage", respModel.getMsg());
+                return "commonError";
+            }
+            model.addAttribute("payResult", respModel.getData() + " "
+                    + returnCarRespModel.getData());
+            return "payResult";
+        }
     }
 }

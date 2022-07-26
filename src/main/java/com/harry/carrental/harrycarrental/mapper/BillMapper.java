@@ -42,4 +42,9 @@ public interface BillMapper {
 
     @Update({"update Bill set isPaid='true' where id=#{billId,jdbcType=INTEGER}"})
     int setPaid(Integer billId);
+
+    @Select({"select id, orderId, userId, carModelId, actualReturnDate, expireDays, rentCost, carDamageCost, fines, totalCost, isPaid, addAmount, returnAmount",
+            "from Bill",
+            "where id=#{id,jdbcType=INTEGER}"})
+    BillEntity selectById(Integer id);
 }

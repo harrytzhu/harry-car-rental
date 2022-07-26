@@ -52,7 +52,7 @@ public class AdminOrderContorller {
     @GetMapping("/admin/view/returnCarPage")
     public String returnCarPage(Model model, @RequestParam String orderId) {
         ActionRequestVO actionRequestVO = new ActionRequestVO();
-        actionRequestVO.setActionId(OrderActionEunm.DELIVER_CAR.name());
+        actionRequestVO.setActionId(OrderActionEunm.RETURN_CAR.name());
         actionRequestVO.setData(Integer.valueOf(orderId));
         CommonRespModel respModel = orderController.orderActions(actionRequestVO);
         model.addAttribute("deliverResult", respModel.getData());

@@ -128,6 +128,9 @@ public class OrderController {
         else if (OrderActionEunm.DELIVER_CAR.name().equals(actionRequestVO.getActionId())) {
             return deliverCar(actionRequestVO.getData());
         }
+        else if (OrderActionEunm.RETURN_CAR.name().equals(actionRequestVO.getActionId())) {
+            return returnCar(actionRequestVO.getData());
+        }
         return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, "Invalid action id.", null);
     }
 
@@ -357,7 +360,7 @@ public class OrderController {
     }
 
     private CommonRespModel deliverCar(Object input) {
-        // 判断是否移交押金
+        // 判断是否已交押金
         Integer orderId = (Integer) input;
         OrderEntity orderEntity = orderMapper.selectById(orderId);
         if (!OrderStatusEnum.PAID.name().equals(orderEntity.getStatus())) {
@@ -369,6 +372,13 @@ public class OrderController {
         // 线下交车
         orderMapper.updateStatus(orderId, OrderStatusEnum.CAR_DELIVERED.name());
         return new CommonRespModel(ExceptionConstant.COMMON_SUCCESS_STATUS, null, "Deliver car successful.");
+    }
+
+    private CommonRespModel returnCar(Object input) {
+        // TODO 第三方支付
+        Integer orderId = (Integer) input;
+        orderMapper.updateStatus(orderId, OrderStatusEnum.CAR_RETURNED.name());
+        return new CommonRespModel(ExceptionConstant.COMMON_SUCCESS_STATUS, null, "Return car successful.");
     }
 
     private CommonRespModel checkDepositParam(GetDepositRequestVO requestVO) {

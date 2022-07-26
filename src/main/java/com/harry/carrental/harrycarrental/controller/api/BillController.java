@@ -217,6 +217,18 @@ public class BillController {
         return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, "Invalid action id.", null);
     }
 
+    @GetMapping("/bills/{billId}")
+    public CommonRespModel getBillById(@PathVariable Integer billId) {
+        BillEntity billEntity = billMapper.selectById(billId);
+        if (billEntity == null) {
+            String errMsg = String.format("Bill does not exist. billId:%s", billId);
+            log.error(errMsg);
+            return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, errMsg, null);
+        }
+        BillVO billVO = ObjectMapperUtils.convert(billEntity, BillVO.class);
+        return new CommonRespModel(ExceptionConstant.COMMON_SUCCESS_STATUS, null, billVO);
+    }
+
     private CommonRespModel payBill(Object input) {
         // TODO 第三方支付或退款
         Integer billId = (Integer) input;
