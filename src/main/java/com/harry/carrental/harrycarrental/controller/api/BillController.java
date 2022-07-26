@@ -60,8 +60,8 @@ public class BillController {
     @Resource
     private CarModelMapper carModelMapper;
 
-    @GetMapping("/bills/temporaryBill")
-    public CommonRespModel getTemporaryBill(@RequestParam Integer orderId) {
+    @GetMapping("/bills/temporaryBill/orders/{orderId}")
+    public CommonRespModel getTemporaryBill(@PathVariable Integer orderId) {
         OrderEntity orderEntity = orderMapper.selectById(Integer.valueOf(orderId));
         if (orderEntity == null) {
             String errMsg = String.format("Order does not exist. orderId:%s", orderId);
@@ -98,8 +98,8 @@ public class BillController {
         return new CommonRespModel(ExceptionConstant.COMMON_SUCCESS_STATUS, null, billVO);
     }
 
-    @GetMapping("/bills/formalBill")
-    public CommonRespModel getFormalBill(@RequestParam Integer orderId, @RequestParam Integer carDamageCost,
+    @GetMapping("/bills/formalBill/orders/{orderId}")
+    public CommonRespModel getFormalBill(@PathVariable Integer orderId, @RequestParam Integer carDamageCost,
             @RequestParam Integer fines) {
         OrderEntity orderEntity = orderMapper.selectById(orderId);
         if (orderEntity == null) {
