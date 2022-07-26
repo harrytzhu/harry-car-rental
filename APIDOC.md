@@ -1,5 +1,5 @@
-##API list
-###General
+## API list
+### General
 The structure of all API return bodies is like this. The HTTP status code is 200. If the status in the response body is equal to 0, it means success, and if it is not 0, it means failure. Errmsg outputs the failure reason. The data field is the response body data when it succeeds
 ```
 {
@@ -9,7 +9,7 @@ The structure of all API return bodies is like this. The HTTP status code is 200
     }
 }
 ```
-###User management
+### User management
 |Field name | description|
 |  ----  | ----  |
 |ID | user ID|
@@ -83,7 +83,7 @@ The structure of all API return bodies is like this. The HTTP status code is 200
     "data":null
 }
 ```
-###Order management
+### Order management
 |Field name | description|
 |  ----  | ----  |
 |ID | order ID|
@@ -213,7 +213,7 @@ The structure of all API return bodies is like this. The HTTP status code is 200
     "data":null
 }
 ```
-###Bill management
+### Bill management
 |Field name | description|
 |  ----  | ----  |
 |ID | bill ID|
