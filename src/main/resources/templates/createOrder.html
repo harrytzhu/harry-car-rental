@@ -153,11 +153,11 @@
       </tr>
       <tr>
         <th>取车日期：</th>
-        <td><input type="date" name="startDate"></td>
+        <td><input type="date" name="startDate" th:value="${startDate}"></td>
       </tr>
       <tr>
         <th>还车日期：</th>
-        <td><input type="date" name="endDate"></td>
+        <td><input type="date" name="endDate" th:value="${endDate}"></td>
       </tr>
     </table>
     <input hidden type="text" name="carModelId" th:value="${carModel.id}">

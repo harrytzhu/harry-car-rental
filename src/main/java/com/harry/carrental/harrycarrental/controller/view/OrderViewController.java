@@ -34,6 +34,10 @@ public class OrderViewController {
     @GetMapping("/view/selectCarPage")
     public String selectCarPage(Model model, @RequestParam String startDate, @RequestParam String endDate) {
         CommonRespModel respModel = carModelController.carModels(startDate, endDate);
+        if (ExceptionConstant.COMMON_ERROR_STATUS == respModel.getStatus()) {
+            model.addAttribute("errorMessage", respModel.getMsg());
+            return "commonError";
+        }
         model.addAttribute("carModels", respModel.getData());
         model.addAttribute("startDate", startDate);
         model.addAttribute("endDate", endDate);
@@ -49,6 +53,8 @@ public class OrderViewController {
             return "commonError";
         }
         model.addAttribute("carModel", respModel.getData());
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
         return "createOrder";
     }
 

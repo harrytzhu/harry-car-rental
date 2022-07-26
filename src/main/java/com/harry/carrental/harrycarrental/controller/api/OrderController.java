@@ -3,6 +3,7 @@ package com.harry.carrental.harrycarrental.controller.api;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.harry.carrental.harrycarrental.checker.DateChecker;
 import com.harry.carrental.harrycarrental.constant.CommonConstant;
 import com.harry.carrental.harrycarrental.constant.OrderActionEunm;
 import com.harry.carrental.harrycarrental.constant.OrderStatusEnum;
@@ -313,51 +314,12 @@ public class OrderController {
             return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, errMsg, null);
         }
 
-        // 校验开始日期和结束日期
-        boolean startDateValid = false;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date startDate = null;
-        Date endDate = null;
-        Date nowDate = new Date();;
-        if (orderVO.getStartDate() != null && orderVO.getEndDate() != null) {
-            try {
-                startDate = sdf.parse(orderVO.getStartDate());
-                endDate = sdf.parse(orderVO.getEndDate());
-            } catch (ParseException e) {
-                String errMsg = String.format("StartDate or endDate format parse failed. startDate:%s, endDate:%s",
-                        orderVO.getStartDate(), orderVO.getEndDate());
-                log.error(errMsg);
-            }
-        }
-        if (startDate == null || endDate == null) {
-            String errMsg = String.format("StartDate or endDate format parse failed. startDate:%s, endDate:%s",
-                    orderVO.getStartDate(), orderVO.getEndDate());
-            log.error(errMsg);
-            return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, errMsg, null);
-        }
-
-        // 开始日期不能晚于当天
-        if (nowDate.getTime() - startDate.getTime() > 1000 * 3600 * 24) {
-            String errMsg = String.format("Invalid startDate. startDate:%s", orderVO.getStartDate());
-            log.error(errMsg);
-            return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, errMsg, null);
-        }
-
-        // 结束时间不能晚于开始时间
-        if (startDate.getTime() <= endDate.getTime()) {
-            startDateValid = true;
-        }
-        else {
-            String errMsg = String.format("StartDate should before endDate. startDate:%s, endDate:%s",
-                    orderVO.getStartDate(), orderVO.getEndDate());
-            log.error(errMsg);
-            return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, errMsg, null);
-        }
-        if (!startDateValid) {
-            String errMsg = String.format("Invalid startDate or endDate. startDate:%s, endDate:%s",
-                    orderVO.getStartDate(), orderVO.getEndDate());
-            log.error(errMsg);
-            return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, errMsg, null);
+        // 校验日期
+        CommonRespModel checkDateResp = DateChecker.checkStartDateAndEndDate(orderVO.getStartDate(),
+                orderVO.getEndDate());
+        if (ExceptionConstant.COMMON_ERROR_STATUS == checkDateResp.getStatus()) {
+            log.error(checkDateResp.getMsg());
+            return checkDateResp;
         }
 
         // 校验价格是否存在
@@ -369,7 +331,16 @@ public class OrderController {
         }
 
         // 计算押金
-        int lease = dateDifferent(startDate, endDate);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        int lease = 0;
+        try {
+            lease = dateDifferent(sdf.parse(orderVO.getStartDate()), sdf.parse(orderVO.getEndDate()));
+        } catch (ParseException e) {
+            String errMsg = String.format("Date parse failed. startDate:%s, endDate:%s", orderVO.getStartDate(),
+                    orderVO.getEndDate());
+            log.error(errMsg);
+            return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, errMsg, null);
+        }
         int depositDays = lease + Integer.valueOf(DEPOSIT_DAYS);
         int deposit = depositDays  * priceEntity.getPrice();
         orderVO.setDeposit(deposit);

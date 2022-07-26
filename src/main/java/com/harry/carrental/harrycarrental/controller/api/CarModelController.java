@@ -2,8 +2,11 @@ package com.harry.carrental.harrycarrental.controller.api;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.harry.carrental.harrycarrental.checker.DateChecker;
+import com.harry.carrental.harrycarrental.constant.CommonConstant;
 import com.harry.carrental.harrycarrental.entity.CarModelEntity;
 import com.harry.carrental.harrycarrental.entity.OrderEntity;
+import com.harry.carrental.harrycarrental.exception.ExceptionConstant;
 import com.harry.carrental.harrycarrental.mapper.CarModelMapper;
 import com.harry.carrental.harrycarrental.mapper.OrderMapper;
 import com.harry.carrental.harrycarrental.model.CommonRespModel;
@@ -33,6 +36,11 @@ public class CarModelController {
 
     @GetMapping("/carModels")
     public CommonRespModel<List<CarModelVO>> carModels(@RequestParam String startDate, @RequestParam String endDate) {
+        CommonRespModel checkDateResp = DateChecker.checkStartDateAndEndDate(startDate, endDate);
+        if (ExceptionConstant.COMMON_ERROR_STATUS == checkDateResp.getStatus()) {
+            log.error(checkDateResp.getMsg());
+            return checkDateResp;
+        }
         List<CarModelEntity> carModelEntities = carModelMapper.selectCarModels();
         if (!CollectionUtils.isEmpty(carModelEntities)) {
             for (CarModelEntity carModelEntity : carModelEntities) {
@@ -54,6 +62,13 @@ public class CarModelController {
     @GetMapping("/carModels/{carModelId}")
     public CommonRespModel<CarModelVO> selectById(@PathVariable String carModelId, @RequestParam String startDate,
             @RequestParam String endDate) {
+        // 校验日期
+        CommonRespModel checkDateResp = DateChecker.checkStartDateAndEndDate(startDate, endDate);
+        if (ExceptionConstant.COMMON_ERROR_STATUS == checkDateResp.getStatus()) {
+            log.error(checkDateResp.getMsg());
+            return checkDateResp;
+        }
+
         CarModelEntity carModelEntity = carModelMapper.selectById(Integer.valueOf(carModelId));
         if (carModelEntity == null) {
             String errMsg = String.format("Car model does not exist. carModelId:%s", carModelId);
@@ -91,4 +106,6 @@ public class CarModelController {
         carModelVO.setBrand(entity.getName().substring(0, entity.getName().indexOf(" ")));
         return carModelVO;
     }
+
+
 }
