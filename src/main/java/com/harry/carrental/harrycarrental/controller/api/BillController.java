@@ -230,7 +230,7 @@ public class BillController {
     }
 
     private CommonRespModel payBill(Object input) {
-        // TODO 第三方支付或退款
+        // TODO Third party payment or refund
         Integer billId = (Integer) input;
         billMapper.setPaid(billId);
         return new CommonRespModel(ExceptionConstant.COMMON_SUCCESS_STATUS, null, "Payment successful.");

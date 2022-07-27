@@ -143,21 +143,21 @@ public class OrderController {
         }
         orderVO = (OrderVO)checkResult.getData();
 
-        // 校验租期天数
+        // Check lease period days
         if (orderVO.getLease() == null || !orderVO.getLease().equals(checkOrderVO.getLease())) {
             String errMsg = String.format("Invalid lease. lease:%s", orderVO.getLease());
             log.error(errMsg);
             return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, errMsg, null);
         }
 
-        // 校验押金
+        // Verification deposit
         if (orderVO.getDeposit() == null || !orderVO.getDeposit().equals(checkOrderVO.getDeposit())) {
             String errMsg = String.format("Invalid deposit. deposit:%s", orderVO.getDeposit());
             log.error(errMsg);
             return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, errMsg, null);
         }
 
-        // 查询包含请求时间段的相同车型已有订单
+        // Query the existing orders of the same model with the requested time period
         List<OrderEntity> orderEntities = orderMapper.selectByCarModelIdAndDate(orderVO.getCarModelId(),
                 orderVO.getStartDate(), orderVO.getEndDate());
         Set<Integer> existOrderCarIds = Sets.newHashSet();
@@ -167,7 +167,7 @@ public class OrderController {
             }
         }
 
-        // 锁定车源
+        // Lock car source
         List<CarEntity> carEntities = carMapper.selectByCarModelId(orderVO.getCarModelId());
         if (carEntities == null || carEntities.size() == 0) {
             String errMsg = String.format("Insufficient cars. carModelName:%s", orderVO.getCarModelName());
@@ -177,7 +177,7 @@ public class OrderController {
         Integer carId = null;
         String lockKey = null;
         for (CarEntity carEntity : carEntities) {
-            // 已有时间冲突订单的车源无法锁定
+            // The car source of the order with time conflict cannot be locked
             if (existOrderCarIds.contains(carEntity.getId())) {
                 log.info("Exist order with this car. carId:{}", carEntity.getId());
                 continue;
@@ -195,7 +195,7 @@ public class OrderController {
         }
         else {
             try {
-                // 创建订单
+                // Create order
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 OrderEntity orderEntity = new OrderEntity();
                 orderEntity.setCarId(carId);
@@ -252,40 +252,40 @@ public class OrderController {
     private CommonRespModel createOrderCheck(Object input) {
         OrderVO orderVO = ObjectMapperUtils.convert(input, OrderVO.class);
 
-        // 校验手机号
+        // Verify mobile number
         if (!PhoneUtil.checkRawPhoneNumber(orderVO.getPhoneNumber())) {
             String errMsg = String.format("Invalid phoneNumber. phoneNumber:%s", orderVO.getPhoneNumber());
             log.error(errMsg);
             return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, errMsg, null);
         }
 
-        // 校验身份证号
+        // Verify ID number
         if (IDCardUtil.idCardValidate(orderVO.getIdNumber())) {
             String errMsg = String.format("Invalid idNumber. idNumber:%s", orderVO.getIdNumber());
             log.error(errMsg);
             return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, errMsg, null);
         }
 
-        // 校验用户名长度
+        // Verify user name length
         if (orderVO.getUsername() == null || orderVO.getUsername().length() > 255) {
             String errMsg = String.format("Invalid length of username. username:%s", orderVO.getUsername());
             log.error(errMsg);
             return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, errMsg, null);
         }
 
-        // 校验用户
+        // Verify user
         boolean userValid = false;
         if (orderVO.getIdNumber() != null) {
             UserEntity userEntity = userMapper.selectByIdNumber(orderVO.getIdNumber());
             if (userEntity != null) {
-                // 校验用户姓名
+                // Verify user name
                 if (!userEntity.getName().equals(orderVO.getUsername())) {
                     String errMsg = String.format("Invalid username. username:%s", orderVO.getUsername());
                     log.error(errMsg);
                     return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, errMsg, null);
                 }
 
-                // 校验用户手机号
+                // Verify user mobile number
                 if (!userEntity.getPhoneNumber().equals(orderVO.getPhoneNumber())) {
                     String errMsg = String.format("PhoneNumber does not match idNumber. phoneNumber:%s, idNumber:%s",
                             orderVO.getPhoneNumber(), orderVO.getIdNumber());
@@ -302,7 +302,7 @@ public class OrderController {
             return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, errMsg, null);
         }
 
-        // 校验车辆型号
+        // Verify car model
         boolean carModelValid = false;
         if (orderVO.getCarModelId() != null) {
             CarModelEntity carModelEntity = carModelMapper.selectById(orderVO.getCarModelId());
@@ -317,7 +317,7 @@ public class OrderController {
             return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, errMsg, null);
         }
 
-        // 校验日期
+        // Verification date
         CommonRespModel checkDateResp = DateChecker.checkStartDateAndEndDate(orderVO.getStartDate(),
                 orderVO.getEndDate());
         if (ExceptionConstant.COMMON_ERROR_STATUS == checkDateResp.getStatus()) {
@@ -325,7 +325,7 @@ public class OrderController {
             return checkDateResp;
         }
 
-        // 校验价格是否存在
+        // Verify whether the price exists
         PriceEntity priceEntity = priceMapper.selectByCarModelId(orderVO.getCarModelId());
         if (priceEntity == null) {
             String errMsg = String.format("Price does not exist carModelId:%s", orderVO.getCarModelId());
@@ -333,7 +333,7 @@ public class OrderController {
             return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, errMsg, null);
         }
 
-        // 计算押金
+        // Calculate the deposit
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         int lease = 0;
         try {
@@ -353,14 +353,14 @@ public class OrderController {
     }
 
     private CommonRespModel payDeposit(Object input) {
-        // TODO 第三方支付
+        // TODO Third party payment
         Integer orderId = (Integer) input;
         orderMapper.updateStatus(orderId, OrderStatusEnum.PAID.name());
         return new CommonRespModel(ExceptionConstant.COMMON_SUCCESS_STATUS, null, "Payment successful.");
     }
 
     private CommonRespModel deliverCar(Object input) {
-        // 判断是否已交押金
+        // Judge whether the deposit has been paid
         Integer orderId = (Integer) input;
         OrderEntity orderEntity = orderMapper.selectById(orderId);
         if (!OrderStatusEnum.PAID.name().equals(orderEntity.getStatus())) {
@@ -369,20 +369,20 @@ public class OrderController {
             return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, errMsg, null);
         }
 
-        // 线下交车
+        // Offline delivery
         orderMapper.updateStatus(orderId, OrderStatusEnum.CAR_DELIVERED.name());
         return new CommonRespModel(ExceptionConstant.COMMON_SUCCESS_STATUS, null, "Deliver car successful.");
     }
 
     private CommonRespModel returnCar(Object input) {
-        // TODO 第三方支付
+        // TODO Offline car return
         Integer orderId = (Integer) input;
         orderMapper.updateStatus(orderId, OrderStatusEnum.CAR_RETURNED.name());
         return new CommonRespModel(ExceptionConstant.COMMON_SUCCESS_STATUS, null, "Return car successful.");
     }
 
     private CommonRespModel checkDepositParam(GetDepositRequestVO requestVO) {
-        // 校验用户
+        // Verify user
         boolean userValid = false;
         if (requestVO.getIdNumber() != null) {
             UserEntity userEntity = userMapper.selectByIdNumber(requestVO.getIdNumber());
@@ -396,7 +396,7 @@ public class OrderController {
             return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, errMsg, null);
         }
 
-        // 校验车辆型号
+        // Verify car model
         boolean carModelValid = false;
         if (requestVO.getCarModelId() != null) {
             CarModelEntity carModelEntity = carModelMapper.selectById(requestVO.getCarModelId());
@@ -410,7 +410,7 @@ public class OrderController {
             return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, errMsg, null);
         }
 
-        // 校验开始时间和结束时间
+        // Verification start time and end time
         boolean startDateValid = false;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         if (requestVO.getStartDate() != null && requestVO.getEndDate() != null) {
@@ -432,7 +432,7 @@ public class OrderController {
             return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, errMsg, null);
         }
 
-        // 校验价格是否存在
+        // Verify whether the price exists
         PriceEntity priceEntity = priceMapper.selectByCarModelId(requestVO.getCarModelId());
         if (priceEntity == null) {
             String errMsg = String.format("Price does not exist carModelId:%s", requestVO.getCarModelId());

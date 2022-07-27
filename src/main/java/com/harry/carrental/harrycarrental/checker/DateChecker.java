@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 public class DateChecker {
 
     public static CommonRespModel checkStartDateAndEndDate(String startDateStr, String endDateStr) {
-        // 校验开始日期和结束日期
+        // Verification start date and end date
         boolean startDateValid = false;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date startDate = null;
@@ -43,7 +43,7 @@ public class DateChecker {
             return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, errMsg, null);
         }
 
-        // 结束时间不能晚于开始时间
+        // The end time cannot be later than the start time
         if (startDate.getTime() <= endDate.getTime()) {
             startDateValid = true;
         }
@@ -60,7 +60,7 @@ public class DateChecker {
             return new CommonRespModel(ExceptionConstant.COMMON_ERROR_STATUS, errMsg, null);
         }
 
-        // 结束时间不能晚于1年后
+        // The end time cannot be later than 1 year
         if (endDate.getTime() > nowDate.getTime() + (3600 * 1000 * 24 * 365)) {
             String errMsg = String.format("The end date cannot exceed one year, endDate:%s", endDateStr);
             log.error(errMsg);
