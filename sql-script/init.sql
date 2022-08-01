@@ -90,7 +90,7 @@ create table Bill (
 );
 
 create unique index orderId on Bill (orderId );
-create unique index carModelId on Bill (carModelId );
+create index carModelId on Bill (carModelId );
 
 create table Lock (
     [key] varchar(255) primary key not null,

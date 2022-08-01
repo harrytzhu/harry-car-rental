@@ -6,7 +6,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-  <title>订单创建成功</title>
+  <title>Order created successfully</title>
   <style>
     body {
       font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -132,38 +132,38 @@
 
 <body class="amis-scope">
 <div class="page-error text-center inner-page">
-  <p>订单创建成功，请尽快支付押金</p>
+  <p>The order is created successfully. Please pay the deposit as soon as possible</p>
   <table align="center">
     <tr>
-      <th>车辆型号：</th>
+      <th>Car model：</th>
       <td th:text="${order.carModelName}"></td>
     </tr>
     <tr>
-      <th>用户姓名：</th>
+      <th>User name：</th>
       <td th:text="${order.username}"></td>
     </tr>
     <tr>
-      <th>手机号：</th>
+      <th>Phone number：</th>
       <td th:text="${order.phoneNumber}"></td>
     </tr>
     <tr>
-      <th>身份证号：</th>
+      <th>Id number：</th>
       <td th:text="${order.idNumber}"></td>
     </tr>
     <tr>
-      <th>取车日期：</th>
+      <th>Pick up date：</th>
       <td th:text="${order.startDate}"></td>
     </tr>
     <tr>
-      <th>还车日期：</th>
+      <th>Return date：</th>
       <td th:text="${order.endDate}"></td>
     </tr>
     <tr>
-      <th>租期：</th>
+      <th>Order lease period：</th>
       <td th:text="@{${order.lease} + '天'}"></td>
     </tr>
     <tr>
-      <th>押金：</th>
+      <th>Deposit：</th>
       <td th:text="${order.deposit}"></td>
     </tr>
   </table>
